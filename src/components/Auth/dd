@@ -1,0 +1,42 @@
+{
+    "idToken": {
+        "jwtToken": "eyJraWQiOiJyaEd4WVNCNThReklNaUxmVzdSM1d1ZVE3ZGlaWEIyMzJ1bEJWd09Ram1zPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmZWUzNjhjZS0yYzllLTRkYWQtYjc5MS0wMGE0ZTQwN2E3NzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSmtERjV4UkVZIiwiY29nbml0bzp1c2VybmFtZSI6ImZlZTM2OGNlLTJjOWUtNGRhZC1iNzkxLTAwYTRlNDA3YTc3NCIsIm9yaWdpbl9qdGkiOiJmZmNhZGZmNS0xOGM1LTRlZWEtODIwNS0wOGI5ZDA4ODQyNTQiLCJhdWQiOiI3aDhha202aDByYnI4ZmVvNHRlNDUzOWpmMyIsImV2ZW50X2lkIjoiZmMwY2EzZDktYjlkYy00Nzk3LWIwOTktOGU3ODg3NWQ3ODVmIiwiY3VzdG9tOnVzZXJuYW1lIjoia21vcmVubyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjM0OTQ0MDE0LCJleHAiOjE2MzQ5NDc2MTQsImlhdCI6MTYzNDk0NDAxNCwianRpIjoiMjAwMjdhNGQtZWU4NS00MzMxLWFkNWMtMjM0ZTkzYTM2ZmUwIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIn0.fOvbfuh-bv2yYDOd4zWAcM2hUYdLVewomUgH5I4HGw9l6rJGrD0hTQWpVViMiES4NYAYZUPay7txFS9QaY-l0R97d2rKlad5guMeFKWJ6walAPq1Z1qT4hy8qjElWXIKc-uf01ZsmGv5bhz0ERFrRHU0fhRRfI1uD4EmFPDxCZUqJf8EjDY3kjJrTnwYIMNG0MwS-99RsZTOjD90OoMJNTESHYAAMNWvlle6OSt0jT79K-fs3vQcFLElvxcm1aCtmCQgUlz466PxU1Z-FvdhooV5bIyn94SNZY_smI9UjZ2hEoO-BesAhI_o4hHx3-4JPmtscGAa91Lj_Y_zSipKzw",
+        "payload": {
+            "sub": "fee368ce-2c9e-4dad-b791-00a4e407a774",
+            "email_verified": true,
+            "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_JkDF5xREY",
+            "cognito:username": "fee368ce-2c9e-4dad-b791-00a4e407a774",
+            "origin_jti": "ffcadff5-18c5-4eea-8205-08b9d0884254",
+            "aud": "7h8akm6h0rbr8feo4te4539jf3",
+            "event_id": "fc0ca3d9-b9dc-4797-b099-8e78875d785f",
+            "custom:username": "kmoreno",
+            "token_use": "id",
+            "auth_time": 1634944014,
+            "exp": 1634947614,
+            "iat": 1634944014,
+            "jti": "20027a4d-ee85-4331-ad5c-234e93a36fe0",
+            "email": "test@test.com"
+        }
+    },
+    "refreshToken": {
+        "token": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.Ez2T5wx5xqMwguC9AxrznqgCKdmp56moXHNmUW53IKfXTcS9CRAjHAcdjKBojBLkOrU8y5WxBHkylUmcN-xbQOeKY3BCHenYC21B0fhQ5CETmcE0U7iVf-k80nfi_YiqEU_3zWnRC1MahPeBn1Wvn0MoapU5gUYoCCDA8kgrXkv-Rm10ok0TWsANosyMu86plaF9pyOxBcsSrCqtTDLI23BWqLrdIxdJ91JjbuP6XDj_s06iytlL8PgGQWMYXJx5z7VBsd4x1XSwqLZcUlS4rQrj67TEXUSz36ey9SkhfQ8y_l1C46kjI2prPuluUGlBtOHu87kHHaCDMjKQ_X9pog.woJvFJXhW1Ur61ho.0tsUsxUulVwwB8is6TgBZT8_bjYYXx7_HgrqXVZw2d8YH_F8SmDRvW9-FLzwlbImAcKa-Ihy2hszQzV71jUwYQ0JNSXaJO-OmQxNgj1ltUV-EXMKjWkhWbfC5EdyyFv868TX4pFjNe5VhHS9NK6NHtmRKvx66lEPdYxBtEwIMoXpheXnP1QNJWoAkl4yzt9A3nRU66kOgXBu6pTskIWUvqsq9VLNtJq18WgV6_Rq4NEj0WWeqGdLBNYaywQhJzOMDXssnzEai3MFbUAuk2udcaBR3dCFXdEh-DX5citjk9yfZ08NJbfUeDi0JrQIR2zMLUMfKRMwvY2fMra7CPI8XZ1jqr4ZvT2d1_90kmhPi00yUZrhNB4_b7kD8pMnFfzy0usHxTWtWx9MONgKd9cm_-ezaK2JpeUqcqCtHgkyH7h5GRtp7g5FMcs0WTcp-LzfMRKY3YW9pdF8T8fsp1Bn5tAz-u9XIrTvMkaT090o0vx9DFczsv9XnFiL2aYYSW7CgLW2fzMQOQpnkusYmLXczA0sd85pXVRdGw0-HZVPSzu8OBDCVP6tMae20kjcmIHk8inlzCkEJnkzhUoOAum-vc9Py7OlgXPNYPDJVwwJcGu9WWYDsz72GqBEaFRYhgPQozUUWigCvX5wIlkupP4x5w5lrEp-WseU73xTn7vI9E-7tgMTy2c4RMtYCocDNGNeJMsRUdf77u3xjMpFPz3X-HTj8XcM8C4MxyEA-BJToe7KDT7hjFxq9r9EkqAxjmqUVJjMyXL76KYLVKvl1SGTn0UQLHKXOfkLbG5pgTHm1PhOKp9IZHN7U3M-IEMnYeyDgvMRtiJcQtqWSZzHfId3RKjmyHewFY_p_nPQmTudH-ULuShOg8Nc8kldd_SV8wUyIPhbVmrOhcTWn1TaS8s_Z45BtczZDkRFYrjfMZyYM-UGvRhDQwyryQIQWVCX4tNTqzpwYn1VmsvpvrvoILCT6rl4RlkV79b45xwXDkuIbwIWexkOZPgFY4T-QpvAc5IsfE1ehhk5hYDZgNQaJJI_1X4GURQCUWopwhKZLMLCIWnQz9h0xGdRhxSLcK-1qwCHUm97n2BdSyZkW7Y2RkT1IjOFHMYAbiGM_hEQdyCy_n7berT6FQdn_CQwGr1DMAAFcsnBbQ9RKIiyN9S8HoCz6FZ5PPx_OsfzUcs4VkuHTOCiW9Zv3fegp_8ZZpYqA_n7z2L7ERJkU2SpRqDOefeGGCuofOe97fzmjhbOU-kqDqFWMHO44sWAnUo3tnkYEfZlkQTyNIYsNXjaPMGYX6qcHuj_lAse3cVw4URGj9tVLGjU8VgIJhW_1kvhNtcgUw.U9d9xZKRoJ2uuw95NujR-A"
+    },
+    "accessToken": {
+        "jwtToken": "eyJraWQiOiJqd3RscXJZMDBJUGh4eDN1OUpOc0FzUnBMWFlXUGVtTmFpYTA4SThQMkE0PSIsImFsZyI6IlJTMjU2In0.eyJvcmlnaW5fanRpIjoiZmZjYWRmZjUtMThjNS00ZWVhLTgyMDUtMDhiOWQwODg0MjU0Iiwic3ViIjoiZmVlMzY4Y2UtMmM5ZS00ZGFkLWI3OTEtMDBhNGU0MDdhNzc0IiwiZXZlbnRfaWQiOiJmYzBjYTNkOS1iOWRjLTQ3OTctYjA5OS04ZTc4ODc1ZDc4NWYiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjM0OTQ0MDE0LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9Ka0RGNXhSRVkiLCJleHAiOjE2MzQ5NDc2MTQsImlhdCI6MTYzNDk0NDAxNCwianRpIjoiNGRkMzljNzgtMGI3MC00NTQyLTlmYzUtZDA4YjlkYTY3YWI2IiwiY2xpZW50X2lkIjoiN2g4YWttNmgwcmJyOGZlbzR0ZTQ1MzlqZjMiLCJ1c2VybmFtZSI6ImZlZTM2OGNlLTJjOWUtNGRhZC1iNzkxLTAwYTRlNDA3YTc3NCJ9.VTnKaosiHCeDSSFk1x0m3YaVur5GGaJAQcLT1K8rczXKVrevbBlhARPV_mDKG0cO-0NWlGqbkrGWE-B-ifFA4tjDvwy3KJt9alqviyQ9Z59MxFvDa6PVfOeezyzSEP4XiNSaH0BMYH6w4qiESsqGCm2Za2T0g4Y36Bpa4hds0ss42_GeDOvXj5IuN0l4KRkNGDk96qruGJcg8LE6KoCnhbwFtHAGkR3jSHjQ5PXj7uA2HaDDackXqvXUB54UlXlbsA0yA3qO3kn6IZM3AmGnbKBNl-rUdlsoy2QzylxbsoEthE74ciCyLI_RNqro3HmxFSKBp1IINRIXVA0nOAAvdQ",
+        "payload": {
+            "origin_jti": "ffcadff5-18c5-4eea-8205-08b9d0884254",
+            "sub": "fee368ce-2c9e-4dad-b791-00a4e407a774",
+            "event_id": "fc0ca3d9-b9dc-4797-b099-8e78875d785f",
+            "token_use": "access",
+            "scope": "aws.cognito.signin.user.admin",
+            "auth_time": 1634944014,
+            "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_JkDF5xREY",
+            "exp": 1634947614,
+            "iat": 1634944014,
+            "jti": "4dd39c78-0b70-4542-9fc5-d08b9da67ab6",
+            "client_id": "7h8akm6h0rbr8feo4te4539jf3",
+            "username": "fee368ce-2c9e-4dad-b791-00a4e407a774"
+        }
+    },
+    "clockDrift": 0
+}
