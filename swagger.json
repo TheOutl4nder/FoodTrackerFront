@@ -1,0 +1,280 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "FoodTracker API",
+        "description": "REST API used for FoodTracker project",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users":{
+            "post":{
+                "description": "Adds a new user",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully added user to registry"
+                    }
+                }
+            }
+        },
+        "/users/{id}":{
+            "get":{
+                "description": "Returns a user with a matching ID, none if not found",
+                "responses": {
+                    "200":{
+                        "description": "Successfully returned user",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "description": "Updates user with matching ID",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully updated user"
+                    }
+                }
+            },
+            "delete":{
+                "description": "Deletes user with matching ID",
+                "responses": {
+                    "200":{
+                        "description": "Successfully deleted user"
+                    }
+                }
+            }
+        },
+        "/reviews/{dishId}":{
+            "get":{
+                "description": "Fetches all reviews of a dish that matches the dishId",
+                "responses": {
+                    "200":{
+                        "description": "Successfully sent all reviews of dish",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "description": "Adds a new review to the dish with matching dishId",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully added review to dish"
+                    }
+                }
+            }
+        },
+        "/reviews/{dishId}/{reviewId}":{
+            "post":{
+                "description": "Updates a review to the dish with matching dishId",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully updated review to dish"
+                    }
+                }
+            },
+            "delete":{
+                "description": "Deletes a review to the dish with matching dishId",
+                "responses": {
+                    "200":{
+                        "description": "Successfully deleted review to dish"
+                    }
+                }
+            }
+        },
+        "/dishes/{restaurantId}":{
+            "get":{
+                "description": "Fetches all dishes from a restaurant with matching Id",
+                "responses": {
+                    "200":{
+                        "description": "Successfully sent all dishes of restaurant",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "description": "Adds dish to a restaurant with matching Id",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully added dish"
+                    }
+                }
+            }
+        },
+        "/dishes/{restaurantId}/{dishId}":{
+            "put":{
+                "description": "Updates the dish info, this update will be reflected on all restaurants that carry this particular dish",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully updated dish"
+                    }
+                }
+            },
+            "delete":{
+                "description": "Deletes the dish, this update will be reflected on all restaurants that carry this particular dish",
+                "responses": {
+                    "200":{
+                        "description": "Successfully deleted dish"
+                    }
+                }
+            }
+        },
+        "/restaurants/":{
+            "get":{
+                "description": "Fetches recently added restaurants within the req's body location",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully returned all recent restaurants",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "description": "Adds a restaurant",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Successfully added restaurant"
+                    }
+                }
+            }
+        },
+        "/restaurants/{restaurantId}":{
+            "get":{
+                "description": "Returns a restaurant with matching Id",
+                "responses": {
+                    "200":{
+                        "description": "Successfully returned restaurant"
+                    }
+                }
+            },
+            "put":{
+                "description": "Updates the matching restaurant's info",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated restaurant's info"
+                    }
+                }
+            },
+            "delete":{
+                "description": "Deletes a restaurant from our registry",
+                "responses": {
+                    "200":{
+                        "description": "Deleted successfully the restaurant"
+                    }
+                }
+            }
+        }
+    }
+}
