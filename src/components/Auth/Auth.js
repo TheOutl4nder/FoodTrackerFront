@@ -1,15 +1,27 @@
 import React from "react";
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
 import UserPool from "../../AWS/UserPool";
-import { CognitoUser, AuthenticationDetails, CognitoUserAttribute } from "amazon-cognito-identity-js";
+import useInput from "../../hooks/use-input";
+import {
+  CognitoUser,
+  AuthenticationDetails,
+  CognitoUserAttribute,
+} from "amazon-cognito-identity-js";
 import classes from "./Auth.module.css";
+
 export default function Auth() {
+  const validatePassword = (value) => {
+    return (
+      value.trim().length <= 7 || !/[a-z]/.test(value) || !/[A-Z]/.test(value)
+    );
+  };
   const [isLogin, setIsLogin] = useState(true);
-  const usernameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [authError, setAuthError] = useState(false);
+  const nameHook = useInput((value) => value.trim() === "");
+  const emailHook = useInput((value) => !value.includes("@"));
+  const passwordHook = useInput(validatePassword);
 
   const history = useHistory();
 
@@ -17,6 +29,7 @@ export default function Auth() {
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
+    setAuthError(false);
   };
 
   const ClickHandler = (event) => {
@@ -30,19 +43,18 @@ export default function Auth() {
 
   const LogInHandler = () => {
     console.log("Loging in");
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
+    console.log(emailHook.value);
+    console.log(passwordHook.value);
 
-    
     //TODO Make Request to login
     const user = new CognitoUser({
-      Username: emailRef.current.value,
+      Username: emailHook.value,
       Pool: UserPool,
     });
 
     const authDetails = new AuthenticationDetails({
-      Username: emailRef.current.value,
-      Password: passwordRef.current.value,
+      Username: emailHook.value,
+      Password: passwordHook.value,
     });
 
     user.authenticateUser(authDetails, {
@@ -50,10 +62,10 @@ export default function Auth() {
         console.log("onSuccess: ", data);
         authCtx.login(data.idToken.jwtToken);
         history.replace("/home");
-        
       },
       onFailure: (err) => {
         console.error("onFailure :", err);
+        setAuthError(true);
       },
       newPasswordRequired: (data) => {
         console.log("newPasswordRequired: ", data);
@@ -63,29 +75,47 @@ export default function Auth() {
 
   const RegisterHandler = () => {
     console.log("Register");
-    console.log(usernameRef.current.value);
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
+    console.log(nameHook.value);
+    console.log(emailHook.value);
+    console.log(passwordHook.value);
     // //TODO Make Request to register
     const usernameAttribute = new CognitoUserAttribute({
-      Name: 'custom:username',
-      Value: usernameRef.current.value
-     });
-    UserPool.signUp(
-      emailRef.current.value,
-      passwordRef.current.value,
-      [usernameAttribute],
-      null,
-      (err, data) => {
-        if (err) {
-          console.error(err);
+      Name: "custom:username",
+      Value: nameHook.value,
+    });
+    try {
+      UserPool.signUp(
+        emailHook.value,
+        passwordHook.value,
+        [usernameAttribute],
+        null,
+        (err, data) => {
+          if (err) {
+            console.error(err);
+            alert(err);
+          } else {
+            setIsLogin(true);
+            passwordHook.reset();
+          }
         }
-        console.log(data);
-      }
-    );
-    authCtx.login("token");
-    history.replace("/home");
+      );
+    } catch {
+      alert("error");
+    }
   };
+
+  let RegisterformIsInvalid =
+    nameHook.isInvalid || emailHook.isInvalid || passwordHook.isInvalid;
+
+  let LoginformIsInvalid = emailHook.isInvalid || passwordHook.isInvalid;
+
+  const isBtnDisabled = isLogin
+    ? LoginformIsInvalid
+      ? true
+      : false
+    : RegisterformIsInvalid
+    ? true
+    : false;
 
   return (
     <div className={classes.main}>
@@ -96,25 +126,65 @@ export default function Auth() {
 
       <section className={classes.auth}>
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+        {authError && (
+          <div className={classes.invalidCredentials}>
+            Incorrect username or password
+          </div>
+        )}
         <form onSubmit={ClickHandler}>
           {!isLogin && (
             <>
               <div className={classes.control}>
                 <label htmlFor="username">Username</label>
-                <input ref={usernameRef} type="text" id="username" required />
+                <input
+                  value={nameHook.value}
+                  onChange={nameHook.ChangeHandler}
+                  onBlur={nameHook.BlurHandler}
+                  type="text"
+                  id="username"
+                  required
+                />
+                {nameHook.isInvalid && (
+                  <p className={classes.errorText}>
+                    Name should not be empty**
+                  </p>
+                )}
               </div>
             </>
           )}
           <div className={classes.control}>
             <label htmlFor="email">Your Email</label>
-            <input ref={emailRef} type="email" id="email" required />
+            <input
+              value={emailHook.value}
+              onChange={emailHook.ChangeHandler}
+              onBlur={emailHook.BlurHandler}
+              type="email"
+              id="email"
+              required
+            />
+            {emailHook.isInvalid && (
+              <p className={classes.errorText}>Please enter a valid email**</p>
+            )}
           </div>
           <div className={classes.control}>
             <label htmlFor="password">Your Password</label>
-            <input ref={passwordRef} type="password" id="password" required />
+            <input
+              value={passwordHook.value}
+              onChange={passwordHook.ChangeHandler}
+              onBlur={passwordHook.BlurHandler}
+              type="password"
+              id="password"
+              required
+            />
+            {passwordHook.isInvalid && (
+              <p className={classes.errorText}>
+                Password should have uppercase and lowercase letters, and be at
+                least 8 chars long**
+              </p>
+            )}
           </div>
           <div className={classes.actions}>
-            <button>
+            <button disabled={isBtnDisabled}>
               {isLogin ? "Login" : "Create Account"}
             </button>
             <button
