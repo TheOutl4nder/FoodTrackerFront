@@ -19,8 +19,8 @@
   height: 164px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid rgb(38, 38, 117);;
-  border-color: rgb(38, 38, 117) transparent rgb(38, 38, 117) transparent;
+  border: 6px solid orange;
+  border-color: orange transparent orange;
   animation: spinner 1.2s linear infinite;
 }
 @keyframes spinner {
