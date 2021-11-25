@@ -17,6 +17,8 @@
   align-items: center;
 }
 
+
+
 .card_right {
   display: flex;
   width: 30%;
@@ -28,15 +30,22 @@
 
 .card_right img {
   width: auto;
-  max-width: 150px;
+  max-width: 200px;
   height: auto;
-  max-height: 100px;
+  max-height: 200px;
   border-radius: 30px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.17);
 }
 
+.cardLink{
+  text-decoration: none;
+  color:inherit;
+}
+
+
+
 .card_left {
-  width: 90%;
+  width: 100%;
   height: 100%;
   border-top: 1px solid #e4e4e4;
   background-color: #f3a6a6;
@@ -54,8 +63,9 @@
 }
 
 .stars {
-  background-color: yellow;
   margin-right: 40px;
+  font-weight: 600;
+  
 }
 
 .title {
@@ -88,6 +98,23 @@
   display: inline;
   padding-right: 3px;
   font-weight: bolder;
+}
+
+.imageContainer{
+  height:100%;
+  display:flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.imageContainer img{
+  width: auto;
+  max-width: 150px;
+  height: auto;
+  max-height: 120px;
+  border-radius: 10px;
+  margin:5px;
+
 }
 
 /*   

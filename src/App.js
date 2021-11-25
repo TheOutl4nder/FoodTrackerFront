@@ -15,12 +15,11 @@ function App() {
   return (
     <Layout>
       <Switch>
-        
-          <Route path="/" exact>
-            {!authCtx.isLoggedIn && <MainPage></MainPage>}
-            {authCtx.isLoggedIn && <Redirect to="/home"></Redirect>}
-          </Route>
-        
+        <Route path="/" exact>
+          {!authCtx.isLoggedIn && <MainPage></MainPage>}
+          {authCtx.isLoggedIn && <Redirect to="/home"></Redirect>}
+        </Route>
+
         {authCtx.isLoggedIn && (
           <>
             <Route path="/home">
@@ -29,7 +28,7 @@ function App() {
             <Route path="/profile">
               <ProfilePage></ProfilePage>
             </Route>
-            <Route path="/restaurant">
+            <Route path="/restaurant/:restaurantId">
               <RestaurantPage></RestaurantPage>
             </Route>
             <Route path="/dish">
@@ -37,9 +36,7 @@ function App() {
             </Route>
           </>
         )}
-        <Route>
-        {!authCtx.isLoggedIn && <Redirect to="/"></Redirect>}
-        </Route>
+        <Route>{!authCtx.isLoggedIn && <Redirect to="/"></Redirect>}</Route>
       </Switch>
     </Layout>
   );
