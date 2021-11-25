@@ -88,7 +88,7 @@ export default function Card({ element }) {
                 {photos.map((image) => (
                   <img
                     alt={"broken"}
-                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${image.photo_reference}&key=AIzaSyAEzEQc_UNwpNmgR9AfoW-hm7fDQea22JU
+                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${image.photo_reference}&key=${process.env.REACT_APP_API_KEY}
                   `}
                   ></img>
                 ))}
