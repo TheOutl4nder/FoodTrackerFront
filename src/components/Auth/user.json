@@ -1,0 +1,16 @@
+{
+    "sub": "fee368ce-2c9e-4dad-b791-00a4e407a774",
+    "email_verified": true,
+    "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_JkDF5xREY",
+    "cognito:username": "fee368ce-2c9e-4dad-b791-00a4e407a774",
+    "origin_jti": "4e3ef04e-7083-4ed8-b3a8-30096a3734dd",
+    "aud": "7h8akm6h0rbr8feo4te4539jf3",
+    "event_id": "01227997-bf38-494d-bc97-9b1ac0d4abfe",
+    "custom:username": "kmoreno",
+    "token_use": "id",
+    "auth_time": 1637875161,
+    "exp": 1637878761,
+    "iat": 1637875161,
+    "jti": "fcb4378e-3dd9-4b60-8d7a-49280355eae2",
+    "email": "test@test.com"
+}

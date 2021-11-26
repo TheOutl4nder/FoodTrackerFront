@@ -37,6 +37,7 @@ export default function AddDishForm(props) {
               onChange={reviewHook.ChangeHandler}
               onBlur={reviewHook.BlurHandler}
               type="text"
+              disabled={props.disabledInputs}
               required
             />
             {reviewHook.isInvalid && (
@@ -51,6 +52,8 @@ export default function AddDishForm(props) {
               onBlur={gradeHook.BlurHandler}
               name="cars"
               required
+              disabled={props.disabledInputs}
+              
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -70,6 +73,7 @@ export default function AddDishForm(props) {
               onBlur={instructionsHook.BlurHandler}
               type="text"
               required
+              disabled={props.disabledInputs}
             />
             {instructionsHook.isInvalid && (
               <p className={classes.errorText}>
@@ -80,12 +84,19 @@ export default function AddDishForm(props) {
 
           <div className={classes.actions}>
             <div className={classes.formFlex}>
-              <button className={classes.control} onClick={props.onCancel}>
-                Cancel
+              {!props.disabledInputs && <div>
+                <button className={classes.control} onClick={props.onCancel}>
+                  Cancel
+                </button>
+                <button disabled={formIsInvalid} className={classes.control}>
+                  Save
+                </button>
+              </div>}
+              {props.disabledInputs &&
+                <button className={classes.control} onClick={props.onCancel}>
+                Close
               </button>
-              <button disabled={formIsInvalid} className={classes.control}>
-                Save
-              </button>
+              }
             </div>
           </div>
         </form>

@@ -60,7 +60,7 @@ export default function Auth() {
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
         console.log("onSuccess: ", data);
-        authCtx.login(data.idToken.jwtToken);
+        authCtx.login(data.idToken.jwtToken,data.idToken.payload["custom:username"]);
         history.replace("/home");
       },
       onFailure: (err) => {

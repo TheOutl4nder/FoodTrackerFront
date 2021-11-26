@@ -6,9 +6,7 @@ export default function Search(props) {
   let searchRef = useRef("");
 
   let keyPress = (e) => {
-    
     if (e.key === "Enter" && searchRef.current) {
-      console.log(e.key);
       props.onEnterKey(searchRef.current.value);
     }
   };

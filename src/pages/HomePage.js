@@ -945,32 +945,35 @@ export default function HomePage() {
   const [devices, setDevices] = useState(FakeDevices);
   const [filtered, setFiltered] = useState(FakeDevices);
 
-
+//   `${process.env.REACT_APP_BACKEND_URL}restaurants?restaurantQuery=${query}`
   const getRestaurants = useCallback(async (query) => {
-   //  try {
-   //    const response = await fetch(
-   //      `${process.env.REACT_APP_BACKEND_URL}/textsearch/json?query=${query}&key=${process.env.REACT_APP_API_KEY}`,
-   //      {
-   //        method: "GET",
-   //        headers: {
-   //        },
-   //      }
-   //    );
+    try {
+      const response = await fetch(
+           `${process.env.REACT_APP_BACKEND_URL}restaurants?restaurantQuery=${query}`
+       ,
+        {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin':"*"
+          },
+        }
+      );
 
-   //    const data = await response.json();
-   //    console.log(data);
+      const data = await response.json();
+      console.log(data);
 
-   //    if (!response.ok) {
-   //      throw new Error(data.message || "Could not get restaurants");
-   //    }
-   //    console.log(data);
-   //    setTimeout(() => {
-   //      setIsLoading(false);
-   //    }, 200);
-   //  } catch {
-   //    alert("Something went wrong while getting restaurants");
-   //    setError(true);
-   //  }
+      if (!response.ok) {
+        throw new Error(data.message || "Could not get restaurants");
+      }
+      console.log(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
+    } catch {
+      alert("Something went wrong while getting restaurants");
+      setError(true);
+    }
    console.log('REQUEST TO GET RESTAURANTS')
   }, []);
 
@@ -979,6 +982,7 @@ export default function HomePage() {
   }, [getRestaurants]);
 
   let filterRestaurants = (query) => {
+     getRestaurants(query);
     // setQuery(query);
     if (query === "") {
       setFiltered(FakeDevices);
