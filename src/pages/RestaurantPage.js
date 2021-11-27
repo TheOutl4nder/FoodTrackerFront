@@ -81,7 +81,6 @@ export default function RestaurantPage() {
   const [showAddDishModal, setAddDishModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
-  
 
   const showNewDishModalHandler = () => {
     setNewDishModal(true);
@@ -191,10 +190,7 @@ export default function RestaurantPage() {
         `${process.env.REACT_APP_BACKEND_URL}/reviews`,
         {
           method: "POST",
-          body: dishReview,
-          headers: {
-            "Access-Control-Allow-Origin": "*"
-          },
+          body: JSON.stringify(dishReview),
         }
       );
 
