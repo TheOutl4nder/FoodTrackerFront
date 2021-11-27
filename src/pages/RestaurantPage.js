@@ -9,7 +9,6 @@ import AddDishForm from "../components/RestaurantComponents/AddDishForm/AddDishF
 import NewDishForm from "../components/RestaurantComponents/NewDishForm/NewDishForm";
 
 export default function RestaurantPage() {
-  
   const fakeRestaurant = {
     business_status: "OPERATIONAL",
     formatted_address:
@@ -82,7 +81,7 @@ export default function RestaurantPage() {
   const [showAddDishModal, setAddDishModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
-  console.log(params);
+  
 
   const showNewDishModalHandler = () => {
     setNewDishModal(true);
@@ -95,7 +94,6 @@ export default function RestaurantPage() {
   const showAddDishModalHandler = (dish) => {
     setAddDishModal(true);
     setCurrentDish(dish);
-    console.log(dish);
   };
 
   const dismissAddDishModalHandler = () => {
@@ -186,35 +184,55 @@ export default function RestaurantPage() {
     dismissNewDishModalHandler();
   }, []);
 
-  const postAddDish = useCallback(async (dish) => {
-    console.log(dish);
-    // try {
-    //   const response = await fetch(
-    //     `${process.env.REACT_APP_BACKEND_URL}/alerts`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify(newAlert),
-    //       headers: {
-    //         authorization: localStorage.getItem("token"),
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
+  const postAddDish = useCallback(async (dishReview) => {
+    console.log(dishReview);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/reviews`,
+        {
+          method: "POST",
+          body: dishReview,
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+        }
+      );
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (!response.ok) {
-    //     throw new Error(data.message || "Could not post alert");
-    //   }
-
-    //   getUserAlerts();
-    //   dismissModal();
-    // } catch {
-    //   alert("Something went wrong");
-    // }
-    console.log("REQUEST TO POST ADD DISH");
+      if (!response.ok) {
+        throw new Error(data.message || "Could not post REVIEW");
+      }
+      alert("Review Posted");
+    } catch {
+      alert("Something went wrong");
+    }
+    console.log("REQUEST TO POST REVIEW");
     dismissAddDishModalHandler();
   }, []);
+
+  // const  postAddDish = useCallback(async (dishReview) => {
+  //   console.log(dishReview);
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_BACKEND_URL}/reviews?dishId=randomDish789`,
+  //       {
+  //         method: "GET",
+  //       }
+  //     );
+
+  //     const data = await response.json();
+  //     console.log(data);
+  //     if (!response.ok) {
+  //       throw new Error(data.message || "Could not post alert");
+  //     }
+  //     alert("Review Posted");
+  //   } catch {
+  //     alert("Something went wrong");
+  //   }
+  //   console.log("REQUEST TO POST ADD DISH");
+  //   dismissAddDishModalHandler();
+  // }, []);
 
   useEffect(() => {
     setIsLoading(true);

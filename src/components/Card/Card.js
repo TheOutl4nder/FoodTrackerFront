@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import classes from "./Card.module.css";
 import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
@@ -43,36 +43,40 @@ export default function Card({ element }) {
     },
   ];
 
-  const [photos, setPhotos] = useState(dummyPhotos);
-  const getPlacePhotos = async () => {
-    // try {
-    //   const response = await fetch(
-    //     'URL PARA OBTENER LAS FOTOS',
-    //     {
-    //       method: "GET",
-    //       headers: {},
-    //     }
-    //   );
+  const [isLoading, setIsLoading] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const getPlacePhotos = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/restaurants/photos?restaurantId=${element.place_id}`,
+        {
+          method: "GET",
+          headers: {},
+        }
+      );
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (!response.ok) {
-    //     throw new Error(data.message || "Could not get restaurants");
-    //   }
-    //   console.log(data);
-    //   // setPhotos(data);
-    // } catch {
-    //   alert("Something went wrong while getting the photos");
-    //   // setError(true);
-    // }
-    console.log("Get photos from " + element.place_id);
-  };
+      if (!response.ok) {
+        throw new Error(data.message || "Could not get restaurants");
+      }
+      if(data.body.result.photos){
+        let fourPhotos = data.body.result.photos;
+        if (data.body.result.photos.length > 4) {
+          fourPhotos=data.body.result.photos.slice(0, 4);
+        }
+        setPhotos(fourPhotos);
+      }
+      
+    } catch {
+      alert("Something went wrong while getting the photos");
+      //setError(true);
+    }
+  }, [element.place_id]);
 
   useEffect(() => {
     getPlacePhotos("restaurants");
   }, [getPlacePhotos]);
-
-  // getPlacePhotos();
 
   return (
     <div className={classes.card_wrap}>
@@ -89,7 +93,7 @@ export default function Card({ element }) {
             </div>
             <div className={classes.card_left_down}>
               <div className={classes.imageContainer}>
-                {photos.map((image) => (
+                {photos.length>0&&photos.map((image) => (
                   <img
                     key={image.photo_reference}
                     alt={"broken"}
@@ -97,6 +101,11 @@ export default function Card({ element }) {
                   `}
                   ></img>
                 ))}
+                {
+                  photos.length===0 && <div>
+                    <p className={classes.noPhotosLabel}>This place does not have photos</p>
+                  </div>
+                }
               </div>
             </div>
           </div>

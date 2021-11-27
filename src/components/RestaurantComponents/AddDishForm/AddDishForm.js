@@ -10,13 +10,15 @@ export default function AddDishForm(props) {
   const instructionsHook = useInput(IsEmpty);
   const gradeHook = useInput(IsEmpty, "1");
 
-  let dishData={
-      "review":reviewHook.value,
-      "instructions":instructionsHook.value,
-      "grade": gradeHook.value,
-      "image":"imageURL"
-  }
-
+  let dishData= {
+    "instructions": instructionsHook.value,
+    "rating": gradeHook.value,
+    "userId": "randomUser456",
+    "text": reviewHook.value,
+    "username": localStorage.getItem('username'),
+    "dishId": "randomDish123"
+    }
+    
   const submitHandler = (event) => {
     event.preventDefault();
     props.onSave(dishData);

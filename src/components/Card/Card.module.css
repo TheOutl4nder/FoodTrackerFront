@@ -2,6 +2,7 @@
   flex: 0 1 50%;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .card {
@@ -16,8 +17,6 @@
   justify-content: center;
   align-items: center;
 }
-
-
 
 .card_right {
   display: flex;
@@ -37,12 +36,16 @@
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.17);
 }
 
-.cardLink{
+.cardLink {
   text-decoration: none;
-  color:inherit;
+  color: inherit;
 }
 
-
+.noPhotosLabel {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+}
 
 .card_left {
   width: 100%;
@@ -65,7 +68,6 @@
 .stars {
   margin-right: 40px;
   font-weight: 600;
-  
 }
 
 .title {
@@ -100,21 +102,20 @@
   font-weight: bolder;
 }
 
-.imageContainer{
-  height:100%;
-  display:flex;
-  justify-content: left;
+.imageContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.imageContainer img{
+.imageContainer img {
   width: auto;
-  max-width: 150px;
+  max-width: 20%;
   height: auto;
-  max-height: 120px;
+  max-height: 110px;
   border-radius: 10px;
-  margin:5px;
-
+  margin: 5px;
 }
 
 /*   
@@ -201,31 +202,10 @@
       font-weight: bolder;
     }
      */
-/* @media (min-width: 576px) {
-    .card_wrap,
-    .card_child {
-      flex: 0 1 50%;
-      max-width: 50%;
-    }
+@media (min-width: 576px) {
+  .card_wrap,
+  .card_child {
+    flex: 0 1 50%;
+    max-width: 50%;
   }
-  
-  @media (min-width: 920px) {
-    .card_wrap {
-      flex: 0 1 33%;
-      max-width: 33%;
-    }
-  }
-  
-  @media (min-width: 1200px) {
-    .card_wrap {
-      flex: 0 1 25%;
-      max-width: 25%;
-    }
-  }
-  
-  @media (min-width: 1600px) {
-    .card_wrap {
-      flex: 0 1 20%;
-      max-width: 20%;
-    }
-  } */
+}

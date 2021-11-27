@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import classes from "./DishCard.module.css";
 
 import { FaPlusCircle } from "react-icons/fa";
@@ -15,6 +15,8 @@ export default function DishCard(props) {
   const clickHandler = () => {
     props.onClick(props.dish);
   };
+
+ 
   return (
     
     <div className={classes.card_wrap}>
