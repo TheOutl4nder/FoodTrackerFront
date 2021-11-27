@@ -27,7 +27,8 @@ export default function DishCard(props) {
             <p>{props.dish.name}</p>
           </div>
           <div className={classes.addBtn}>
-            <FaEye onClick={clickHandler} size={30}></FaEye>
+            {props.viewIcon && <FaEye onClick={clickHandler} size={30}></FaEye>}
+            {!props.viewIcon && <FaPlusCircle onClick={clickHandler} size={30}></FaPlusCircle>}
           </div>
         </div>
       </div>

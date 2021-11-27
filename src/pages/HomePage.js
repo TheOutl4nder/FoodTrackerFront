@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Card from "../components/Card/Card";
 import CardContainer from "../components/CardContainer/CardContainer";
 import Search from "../components/search/Search";
+import Error from "../components/Error/Error";
 
 export default function HomePage() {
   const FakeDevices = [
@@ -1007,42 +1008,33 @@ export default function HomePage() {
   //const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [devices, setDevices] = useState(FakeDevices);
-  const [filtered, setFiltered] = useState(FakeDevices);
+  const [devices, setDevices] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
-  //   `${process.env.REACT_APP_BACKEND_URL}restaurants?restaurantQuery=${query}`
   const getRestaurants = useCallback(async (query) => {
-    //  fetch(
-    //    "https://c1hir8vd3l.execute-api.us-east-1.amazonaws.com/dev/compare-yourself",
-    //    { method: "GET", headers: { "Content-Type": "application/json" } }
-    //  )
-    //    .then((response) => response.json())
-    //    .then((json) => console.log(json));
+    setIsLoading(true);
     try {
       const response = await fetch(
-         `${process.env.REACT_APP_BACKEND_URL}/restaurants?restaurantQuery=${query}`,
+        `${process.env.REACT_APP_BACKEND_URL}/restaurants?restaurantQuery=${query}`,
         {
           method: "GET",
-          headers: {
-          },
+          headers: {},
         }
       );
-
       const data = await response.json();
-      console.log(data);
-
+      setDevices(data.body.results);
+      setFiltered(data.body.results);
       if (!response.ok) {
+        setError(true);
         throw new Error(data.message || "Could not get restaurants");
       }
-      console.log(data);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
     } catch {
-      alert("Something went wrong while getting restaurants");
       setError(true);
+      alert("Something went wrong while getting restaurants");
     }
-    console.log("REQUEST TO GET RESTAURANTS");
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
   }, []);
 
   useEffect(() => {
@@ -1051,7 +1043,6 @@ export default function HomePage() {
 
   let filterRestaurants = (query) => {
     getRestaurants(query);
-    // setQuery(query);
     if (query === "") {
       setFiltered(FakeDevices);
     } else {
@@ -1066,11 +1057,15 @@ export default function HomePage() {
     <div>
       HomePage
       <Search onEnterKey={filterRestaurants} />
-      <CardContainer isLoading={isLoading}>
-        {filtered.map((device) => (
-          <Card key={device.name} element={device}></Card>
-        ))}
-      </CardContainer>
+      {error && <Error></Error>}
+      {!error && (
+        <CardContainer isLoading={isLoading}>
+          {filtered &&
+            filtered.map((device) => (
+              <Card key={device.name} element={device}></Card>
+            ))}
+        </CardContainer>
+      )}
     </div>
   );
 }

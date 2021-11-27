@@ -9,6 +9,7 @@ import AddDishForm from "../components/RestaurantComponents/AddDishForm/AddDishF
 import NewDishForm from "../components/RestaurantComponents/NewDishForm/NewDishForm";
 
 export default function RestaurantPage() {
+  
   const fakeRestaurant = {
     business_status: "OPERATIONAL",
     formatted_address:
@@ -81,7 +82,25 @@ export default function RestaurantPage() {
   const [showAddDishModal, setAddDishModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
-  console.log(params.restaurantId);
+  console.log(params);
+
+  const showNewDishModalHandler = () => {
+    setNewDishModal(true);
+  };
+
+  const dismissNewDishModalHandler = () => {
+    setNewDishModal(false);
+  };
+
+  const showAddDishModalHandler = (dish) => {
+    setAddDishModal(true);
+    setCurrentDish(dish);
+    console.log(dish);
+  };
+
+  const dismissAddDishModalHandler = () => {
+    setAddDishModal(false);
+  };
 
   const getRestaurant = useCallback(async (query) => {
     //  try {
@@ -164,6 +183,7 @@ export default function RestaurantPage() {
     //   alert("Something went wrong");
     // }
     console.log("REQUEST TO POST NEW DISH");
+    dismissNewDishModalHandler();
   }, []);
 
   const postAddDish = useCallback(async (dish) => {
@@ -193,25 +213,9 @@ export default function RestaurantPage() {
     //   alert("Something went wrong");
     // }
     console.log("REQUEST TO POST ADD DISH");
+    dismissAddDishModalHandler();
   }, []);
 
-  const showNewDishModalHandler = () => {
-    setNewDishModal(true);
-  };
-
-  const dismissNewDishModalHandler = () => {
-    setNewDishModal(false);
-  };
-
-  const showAddDishModalHandler = (dish) => {
-    setAddDishModal(true);
-    setCurrentDish(dish);
-    console.log(dish);
-  };
-
-  const dismissAddDishModalHandler = () => {
-    setAddDishModal(false);
-  };
   useEffect(() => {
     setIsLoading(true);
     getRestaurant("restaurants");
@@ -251,7 +255,12 @@ export default function RestaurantPage() {
         <RestaurantData data={restaurant}>hola</RestaurantData>
         <CardContainer isLoading={false}>
           {products.map((dish) => (
-            <DishCard key={dish.name} dish={dish} onClick={showAddDishModalHandler} />
+            <DishCard
+              viewIcon={false}
+              key={dish.name}
+              dish={dish}
+              onClick={showAddDishModalHandler}
+            />
           ))}
           <AddCard onClick={showNewDishModalHandler}></AddCard>
         </CardContainer>

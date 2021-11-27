@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./Card.module.css";
-import { Link, useParams} from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 
 export default function Card({ element }) {
@@ -42,44 +42,48 @@ export default function Card({ element }) {
       width: 4032,
     },
   ];
-  
 
   const [photos, setPhotos] = useState(dummyPhotos);
-  // const getPlacePhotos = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       'URL PARA OBTENER LAS FOTOS',
-  //       {
-  //         method: "GET",
-  //         headers: {},
-  //       }
-  //     );
+  const getPlacePhotos = async () => {
+    // try {
+    //   const response = await fetch(
+    //     'URL PARA OBTENER LAS FOTOS',
+    //     {
+    //       method: "GET",
+    //       headers: {},
+    //     }
+    //   );
 
-  //     const data = await response.json();
+    //   const data = await response.json();
 
-  //     if (!response.ok) {
-  //       throw new Error(data.message || "Could not get restaurants");
-  //     }
-  //     console.log(data);
-  //     // setPhotos(data);
-  //   } catch {
-  //     alert("Something went wrong while getting the photos");
-  //     // setError(true);
-  //   }
-  // };
+    //   if (!response.ok) {
+    //     throw new Error(data.message || "Could not get restaurants");
+    //   }
+    //   console.log(data);
+    //   // setPhotos(data);
+    // } catch {
+    //   alert("Something went wrong while getting the photos");
+    //   // setError(true);
+    // }
+    console.log("Get photos from " + element.place_id);
+  };
+
+  useEffect(() => {
+    getPlacePhotos("restaurants");
+  }, [getPlacePhotos]);
 
   // getPlacePhotos();
 
   return (
     <div className={classes.card_wrap}>
-      <Link className={classes.cardLink}to={`/restaurant/${element.place_id}`}>
+      <Link className={classes.cardLink} to={`/restaurant/${element.place_id}`}>
         <div className={classes.card}>
           <div className={classes.card_left}>
             <div className={classes.card_left_up}>
               <h2 className={classes.title}>{element.name}</h2>
               <div></div>
               <div className={classes.stars}>
-                Rating: {element.rating}   
+                Rating: {element.rating}
                 <FaStar></FaStar>
               </div>
             </div>
@@ -87,6 +91,7 @@ export default function Card({ element }) {
               <div className={classes.imageContainer}>
                 {photos.map((image) => (
                   <img
+                    key={image.photo_reference}
                     alt={"broken"}
                     src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${image.photo_reference}&key=${process.env.REACT_APP_API_KEY}
                   `}
