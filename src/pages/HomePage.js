@@ -1014,7 +1014,7 @@ export default function HomePage() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/restaurants?restaurantQuery=${query}`,
+        `${process.env.REACT_APP_DOCKER}/restaurants?restaurantQuery=${query}`,
         {
           method: "GET",
           headers: {},
@@ -1054,14 +1054,13 @@ export default function HomePage() {
 
   return (
     <div>
-      HomePage
       <Search onEnterKey={filterRestaurants} />
       {error && <Error></Error>}
       {!error && (
         <CardContainer isLoading={isLoading}>
           {filtered &&
             filtered.map((device) => (
-              <Card key={device.name} element={device}></Card>
+              <Card key={device.place_id} element={device}></Card>
             ))}
         </CardContainer>
       )}

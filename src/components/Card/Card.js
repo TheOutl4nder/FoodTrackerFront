@@ -50,7 +50,7 @@ export default function Card({ element }) {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/restaurants/photos?restaurantId=${element.place_id}`,
+        `${process.env.REACT_APP_DOCKER}/restaurants/photos?restaurantId=${element.place_id}`,
         {
           method: "GET",
           headers: {},
