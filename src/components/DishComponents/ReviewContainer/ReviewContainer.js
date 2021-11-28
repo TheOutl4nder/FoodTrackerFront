@@ -8,7 +8,7 @@ export default function ReviewContainer(props) {
     <div className={classes.container}>
       {props.reviews.length > 0 &&
         props.reviews.map((review) => (
-          <ReviewCard key={review} review={review}></ReviewCard>
+          <ReviewCard key={review.reviewId} review={review}></ReviewCard>
         ))}
     </div>
   );

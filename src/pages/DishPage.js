@@ -25,7 +25,6 @@ export default function DishPage() {
           }
         );
         const data = await response.json();
-        console.log(data);
 
         if (!response.ok) {
           throw new Error(data.message || "Could not get dish");
@@ -38,7 +37,6 @@ export default function DishPage() {
         alert("Something went wrong while getting dish");
         setError(true);
       }
-      console.log("REQUEST TO GET DISH");
     },
     [params.dishId]
   );
@@ -54,7 +52,6 @@ export default function DishPage() {
           }
         );
         const data = await response.json();
-        console.log(data);
 
         if (!response.ok) {
           throw new Error(data.message || "Could not get dish");
@@ -67,7 +64,6 @@ export default function DishPage() {
         alert("Something went wrong while getting dish");
         setError(true);
       }
-      console.log("REQUEST TO GET REVIEWS");
     },
     [params.dishId]
   );
@@ -83,15 +79,14 @@ export default function DishPage() {
       let urls=[];
       let listRef = firebase.storage().ref(`${params.dishId}/`);
       let list= await listRef.listAll();
-      console.log(list.items);
+     
       await asyncForEach(list.items, async (item) => {
         let url= await item.getDownloadURL();
-        console.log(url);
+        
         urls.push(url);
       })
       setPhotos(urls);
       
-      console.log("REQUEST TO GET DISH PHOTOS");
     },
     [params.dishId]
   );

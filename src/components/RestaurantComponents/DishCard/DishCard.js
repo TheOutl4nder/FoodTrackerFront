@@ -17,7 +17,6 @@ export default function DishCard(props) {
   const clickHandler = () => {
     props.onClick(props.dish);
   };
-  console.log(props);
 
   return (
     <div className={classes.card_wrap}>

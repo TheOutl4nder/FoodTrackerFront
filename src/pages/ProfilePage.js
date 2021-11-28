@@ -41,12 +41,12 @@ export default function ProfilePage() {
       );
 
       const data = await response.json();
-      console.log(data);
+      
 
       if (!response.ok) {
         throw new Error(data.message || "Could not get reviews");
       }
-      console.log(data);
+   
       setProfileDishes(data.body);
       setTimeout(() => {
         setIsLoading(false);
@@ -55,13 +55,11 @@ export default function ProfilePage() {
       alert("Something went wrong while getting reviews");
       setError(true);
     }
-    console.log("REQUEST TO GET PROFILE reviews");
   }, []);
 
   const showModalHandler = (dish) => {
     setShowModal(true);
     setCurrentDish(dish);
-    console.log(dish);
   };
 
   const dismissModalHandler = () => {
@@ -92,7 +90,7 @@ export default function ProfilePage() {
       <ProfileCard></ProfileCard>
       <CardContainer isLoading={isLoading}>
         {profileDishes.map((dish) => (
-          <DishCard viewIcon={true} dish={dish} onClick={showModalHandler} />
+          <DishCard key={dish.reviewId}viewIcon={true} dish={dish} onClick={showModalHandler} />
         ))}
       </CardContainer>
     </div>

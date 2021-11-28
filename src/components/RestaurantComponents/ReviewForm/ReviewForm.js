@@ -4,7 +4,7 @@ import useInput from "../../../hooks/use-input";
 import firebase from "../../../firebase";
 import { FaStar } from "react-icons/fa";
 export default function ReviewForm(props) {
-  console.log(props);
+  
   const [files, setFile] = useState(null);
   const fileRef = useRef();
   const [hasImage, setHasImage] = useState(true);
@@ -19,7 +19,6 @@ export default function ReviewForm(props) {
   const instructionsHook = useInput(IsEmpty);
   const gradeHook = useInput(IsEmpty);
 
-  console.log(props);
   let dishData = {
     instructions: instructionsHook.value,
     rating: gradeHook.value,
@@ -42,7 +41,6 @@ export default function ReviewForm(props) {
   let formIsInvalid = reviewHook.isInvalid || instructionsHook.isInvalid || hasImage;
 
   const handleChange = (event) => {
-    console.log(fileRef.current.files[0].name);
     setFile(fileRef.current.files[0]);
   };
 
@@ -51,7 +49,7 @@ export default function ReviewForm(props) {
     let storageRef = firebase.storage().ref(`${bucketName}/${files.name}`);
     let uploadTask = await storageRef.put(files);
     let downloadURL = await storageRef.getDownloadURL();
-    console.log(downloadURL);
+   
     setImage(downloadURL);
     setHasImage(false);
   };

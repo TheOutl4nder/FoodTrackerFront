@@ -77,18 +77,18 @@ export default function DishData({ dish,photos }) {
       width: 4032,
     }
   ];
-console.log(photos);
   // const [photos, setPhotos] = useState(dummyPhotos);
   return (
     <div className={classes.container}>
       <div className={classes.info}>
         <div className={classes.name}>
           <h1>{dish.name}</h1>
+          
         </div>
+        <div><h3>{dish.restaurantName}</h3></div>
         <div className={classes.description}>{dish.description}</div>
-        <div>
-          <h3>{dish.formatted_address}</h3>
-        </div>
+        
+        
       </div>
       <div className={classes.containerCarousel}>
         {photos.length > 0 &&

@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    height: 200px;
+    height: auto;
     background-color: white;
     margin: 70px;
     border-radius: 10px;
@@ -45,7 +45,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-right:20px;
+    margin-right:10px;
+    height:auto;
   }
   
   h1 {

@@ -20,8 +20,7 @@ const useHttp = (applyData) => {
       }
 
       const data = await response.json();
-      console.log('hola')
-      console.log('hey' + data);
+   
       applyData(data);
     } catch (err) {
       setError(err.message || "Something went wrong!");

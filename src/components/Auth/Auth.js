@@ -55,7 +55,6 @@ export default function Auth() {
         }
       );
       const data = await response.json();
-     console.log(data);
       if (!response.ok) {
         throw new Error(data.message || "Could not post user to AWS");
       }
@@ -65,9 +64,6 @@ export default function Auth() {
   };
 
   const LogInHandler = () => {
-    console.log("Loging in");
-    console.log(emailHook.value);
-    console.log(passwordHook.value);
 
     //TODO Make Request to login
     const user = new CognitoUser({
@@ -82,7 +78,6 @@ export default function Auth() {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        console.log("onSuccess: ", data);
         authCtx.login(data.idToken.jwtToken,data.idToken.payload["custom:username"]);
         history.replace("/home");
       },
@@ -91,16 +86,11 @@ export default function Auth() {
         setAuthError(true);
       },
       newPasswordRequired: (data) => {
-        console.log("newPasswordRequired: ", data);
       },
     });
   };
 
   const RegisterHandler = () => {
-    console.log("Register");
-    console.log(nameHook.value);
-    console.log(emailHook.value);
-    console.log(passwordHook.value);
     // //TODO Make Request to register
     const usernameAttribute = new CognitoUserAttribute({
       Name: "custom:username",

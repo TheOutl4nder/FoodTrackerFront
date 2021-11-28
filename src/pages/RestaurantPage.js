@@ -20,7 +20,6 @@ export default function RestaurantPage() {
   const [showReviewModal, setReviewModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
-  console.log(params);
   const showNewDishModalHandler = () => {
     setID(Date.now().toString());
     setNewDishModal(true);
@@ -51,13 +50,10 @@ export default function RestaurantPage() {
           }
         );
         const data = await response.json();
-        console.log(data);
-
+       
         if (!response.ok) {
           throw new Error(data.message || "Could not get single restaurant");
         }
-        console.log(data);
-        console.log(data.body.resaurantInfo);
         setRestaurant(data.body.resaurantInfo.result);
         setProducts(data.body.dishes);
         setTimeout(() => {
@@ -67,7 +63,6 @@ export default function RestaurantPage() {
         alert("Something went wrong while getting restaurants");
         setError(true);
       }
-      console.log("REQUEST TO GET SINGLE RESTAURANT");
     },
     [params.restaurantId]
   );
@@ -99,7 +94,7 @@ export default function RestaurantPage() {
   }, []);
 
   const postReview = useCallback(async (dishReview) => {
-    console.log(dishReview);
+  
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/reviews`,
@@ -118,7 +113,6 @@ export default function RestaurantPage() {
     } catch {
       alert("Something went wrong");
     }
-    console.log("REQUEST TO POST REVIEW");
     dismissReviewModalHandler();
   }, []);
 
