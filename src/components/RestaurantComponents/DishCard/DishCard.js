@@ -1,11 +1,12 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import classes from "./DishCard.module.css";
+
+import { Link, useParams } from "react-router-dom";
 
 import { FaPlusCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 
 export default function DishCard(props) {
-
   // const dish = {
   //   name: "Chicken Crispers",
   //   image:
@@ -16,21 +17,28 @@ export default function DishCard(props) {
     props.onClick(props.dish);
   };
 
- 
   return (
-    
     <div className={classes.card_wrap}>
       <div className={classes.card}>
         <div className={classes.card_up}>
-          <img alt={"broken"} src={props.dish.image}></img>
+          <Link
+            className={classes.cardLink}
+            to={`/dish/${props.dish.dishId}`}
+          >
+            <img alt={"broken"} src={props.dish.image}></img>
+          </Link>
         </div>
+
         <div className={classes.card_down}>
           <div>
             <p>{props.dish.name}</p>
+            {props.viewIcon && <p>{props.dish.restaurantName}</p>}
           </div>
           <div className={classes.addBtn}>
             {props.viewIcon && <FaEye onClick={clickHandler} size={30}></FaEye>}
-            {!props.viewIcon && <FaPlusCircle onClick={clickHandler} size={30}></FaPlusCircle>}
+            {!props.viewIcon && (
+              <FaPlusCircle onClick={clickHandler} size={30}></FaPlusCircle>
+            )}
           </div>
         </div>
       </div>

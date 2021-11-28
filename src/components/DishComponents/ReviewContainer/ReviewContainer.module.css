@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    height: auto;
+    max-height: 900px;
+    background-color: white;
+    margin: 70px;
+    border-radius: 10px;
+    width:80%;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+  }

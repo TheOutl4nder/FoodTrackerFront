@@ -1005,7 +1005,6 @@ export default function HomePage() {
       user_ratings_total: 2384,
     },
   ];
-  //const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [devices, setDevices] = useState([]);

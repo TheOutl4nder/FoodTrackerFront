@@ -5,8 +5,9 @@ import DishCard from "../components/RestaurantComponents/DishCard/DishCard";
 import AddCard from "../components/RestaurantComponents/AddCard/AddCard";
 import Modal from "../components/Modal/Modal";
 import { useParams } from "react-router-dom";
-import AddDishForm from "../components/RestaurantComponents/AddDishForm/AddDishForm";
+import ReviewForm from "../components/RestaurantComponents/ReviewForm/ReviewForm";
 import NewDishForm from "../components/RestaurantComponents/NewDishForm/NewDishForm";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 export default function RestaurantPage() {
   const fakeRestaurant = {
@@ -78,10 +79,10 @@ export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState(fakeRestaurant);
   const [products, setProducts] = useState(fakeProducts);
   const [showNewDishModal, setNewDishModal] = useState(false);
-  const [showAddDishModal, setAddDishModal] = useState(false);
+  const [showReviewModal, setReviewModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
-
+  console.log(params);
   const showNewDishModalHandler = () => {
     setNewDishModal(true);
   };
@@ -90,100 +91,72 @@ export default function RestaurantPage() {
     setNewDishModal(false);
   };
 
-  const showAddDishModalHandler = (dish) => {
-    setAddDishModal(true);
+  const showReviewModalHandler = (dish) => {
+    setReviewModal(true);
     setCurrentDish(dish);
   };
 
-  const dismissAddDishModalHandler = () => {
-    setAddDishModal(false);
+  const dismissReviewModalHandler = () => {
+    setReviewModal(false);
   };
 
   const getRestaurant = useCallback(async (query) => {
-    //  try {
-    //    const response = await fetch(
-    //      `${process.env.REACT_APP_BACKEND_URL}/textsearch/json?query=${query}&key=${process.env.REACT_APP_API_KEY}`,
-    //      {
-    //        method: "GET",
-    //        headers: {
-    //        },
-    //      }
-    //    );
-    //    const data = await response.json();
-    //    console.log(data);
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/restaurants/details?restaurantId=${params.restaurantId}`,
+        {
+          method: "GET",
+          headers: {},
+        }
+      );
+      const data = await response.json();
+      console.log(data);
 
-    //    if (!response.ok) {
-    //      throw new Error(data.message || "Could not get restaurants");
-    //    }
-    //    console.log(data);
-    //    setTimeout(() => {
-    //      setIsLoading(false);
-    //    }, 200);
-    //  } catch {
-    //    alert("Something went wrong while getting restaurants");
-    //    setError(true);
-    //  }
+      if (!response.ok) {
+        throw new Error(data.message || "Could not get single restaurant");
+      }
+      console.log(data);
+      console.log(data.body.resaurantInfo);
+      setRestaurant(data.body.resaurantInfo.result);
+      setProducts(data.body.dishes);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
+    } catch {
+      alert("Something went wrong while getting restaurants");
+      setError(true);
+    }
     console.log("REQUEST TO GET SINGLE RESTAURANT");
-  }, []);
-
-  const getProducts = useCallback(async (query) => {
-    //  try {
-    //    const response = await fetch(
-    //      `${process.env.REACT_APP_BACKEND_URL}/textsearch/json?query=${query}&key=${process.env.REACT_APP_API_KEY}`,
-    //      {
-    //        method: "GET",
-    //        headers: {
-    //        },
-    //      }
-    //    );
-    //    const data = await response.json();
-    //    console.log(data);
-
-    //    if (!response.ok) {
-    //      throw new Error(data.message || "Could not get products");
-    //    }
-    //    console.log(data);
-    //    setTimeout(() => {
-    //      setIsLoading(false);
-    //    }, 200);
-    //  } catch {
-    //    alert("Something went wrong while getting products");
-    //    setError(true);
-    //  }
-    console.log("REQUEST TO GET PRODUCTS");
-  }, []);
+  }, [params.restaurantId]);
 
   const postNewDish = useCallback(async (dish) => {
-    console.log(dish);
-    // try {
-    //   const response = await fetch(
-    //     `${process.env.REACT_APP_BACKEND_URL}/alerts`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify(newAlert),
-    //       headers: {
-    //         authorization: localStorage.getItem("token"),
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
+    
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/restaurants/dishes`,
+        {
+          method: "POST",
+          body: JSON.stringify(dish),
+          headers: {
+            authorization: localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (!response.ok) {
-    //     throw new Error(data.message || "Could not post alert");
-    //   }
-
-    //   getUserAlerts();
-    //   dismissModal();
-    // } catch {
-    //   alert("Something went wrong");
-    // }
-    console.log("REQUEST TO POST NEW DISH");
+      if (!response.ok) {
+        throw new Error(data.message || "Could not post dish");
+      }
+    } catch {
+      alert("Something went wrong");
+    }
     dismissNewDishModalHandler();
   }, []);
 
-  const postAddDish = useCallback(async (dishReview) => {
+  const postReview = useCallback(async (dishReview) => {
     console.log(dishReview);
     try {
       const response = await fetch(
@@ -204,10 +177,10 @@ export default function RestaurantPage() {
       alert("Something went wrong");
     }
     console.log("REQUEST TO POST REVIEW");
-    dismissAddDishModalHandler();
+    dismissReviewModalHandler();
   }, []);
 
-  // const  postAddDish = useCallback(async (dishReview) => {
+  // const  postReview = useCallback(async (dishReview) => {
   //   console.log(dishReview);
   //   try {
   //     const response = await fetch(
@@ -227,30 +200,28 @@ export default function RestaurantPage() {
   //     alert("Something went wrong");
   //   }
   //   console.log("REQUEST TO POST ADD DISH");
-  //   dismissAddDishModalHandler();
+  //   dismissReviewModalHandler();
   // }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     getRestaurant("restaurants");
-    getProducts();
-    setIsLoading(false);
-  }, [getRestaurant, getProducts]);
+  }, [getRestaurant]);
 
   return (
     <>
-      {!error && showAddDishModal && (
+      {!error && showReviewModal && (
         <Modal
           title="Add to your dishes"
-          onConfirm={dismissAddDishModalHandler}
-          onCancel={dismissAddDishModalHandler}
+          onConfirm={dismissReviewModalHandler}
+          onCancel={dismissReviewModalHandler}
         >
-          <AddDishForm
+          <ReviewForm
+            restaurant={restaurant}
             disabledInputs={false}
-            onSave={postAddDish}
+            onSave={postReview}
             dish={currentDish}
-            onCancel={dismissAddDishModalHandler}
-          ></AddDishForm>
+            onCancel={dismissReviewModalHandler}
+          ></ReviewForm>
         </Modal>
       )}
       {!error && showNewDishModal && (
@@ -260,25 +231,29 @@ export default function RestaurantPage() {
           onCancel={dismissNewDishModalHandler}
         >
           <NewDishForm
+            restaurant={restaurant}
             onSave={postNewDish}
             onCancel={dismissNewDishModalHandler}
           ></NewDishForm>
         </Modal>
       )}
-      <div>
-        <RestaurantData data={restaurant}>hola</RestaurantData>
-        <CardContainer isLoading={false}>
-          {products.map((dish) => (
-            <DishCard
-              viewIcon={false}
-              key={dish.name}
-              dish={dish}
-              onClick={showAddDishModalHandler}
-            />
-          ))}
-          <AddCard onClick={showNewDishModalHandler}></AddCard>
-        </CardContainer>
-      </div>
+      {isLoading && !error && <LoadingSpinner></LoadingSpinner>}
+      {!isLoading && (
+        <div>
+          <RestaurantData data={restaurant}>hola</RestaurantData>
+          <CardContainer isLoading={false}>
+            {products.map((dish) => (
+              <DishCard
+                viewIcon={false}
+                key={dish.name}
+                dish={dish}
+                onClick={showReviewModalHandler}
+              />
+            ))}
+            <AddCard onClick={showNewDishModalHandler}></AddCard>
+          </CardContainer>
+        </div>
+      )}
     </>
   );
 }

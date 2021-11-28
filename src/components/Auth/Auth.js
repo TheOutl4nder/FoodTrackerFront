@@ -41,6 +41,29 @@ export default function Auth() {
     }
   };
 
+  const postUser = async (user) => {
+    
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/users`,
+        {
+          method: "POST",
+          headers: {},
+          body:JSON.stringify(user)
+
+          
+        }
+      );
+      const data = await response.json();
+     console.log(data);
+      if (!response.ok) {
+        throw new Error(data.message || "Could not post user to AWS");
+      }
+    } catch {
+      alert("Something went wrong while posting user to AWS");
+    }
+  };
+
   const LogInHandler = () => {
     console.log("Loging in");
     console.log(emailHook.value);
@@ -94,11 +117,12 @@ export default function Auth() {
             console.error(err);
             alert(err);
           } else {
+            postUser({"userId":data.userSub,"photo":"d"})
             setIsLogin(true);
             passwordHook.reset();
           }
         }
-      );
+      )
     } catch {
       alert("error");
     }
@@ -120,6 +144,7 @@ export default function Auth() {
   return (
     <div className={classes.main}>
       <img
+      alt="foodTracker"
         className={classes.logo}
         src="https://i.pinimg.com/originals/fe/50/40/fe5040ef6eb50e18c24f937bc43916a0.jpg"
       ></img>

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import CardContainer from "../components/CardContainer/CardContainer";
 import Modal from "../components/Modal/Modal";
 import ProfileCard from "../components/ProfileComponents/ProfileCard";
-import AddDishForm from "../components/RestaurantComponents/AddDishForm/AddDishForm";
+import ReviewForm from "../components/RestaurantComponents/ReviewForm/ReviewForm";
 import DishCard from "../components/RestaurantComponents/DishCard/DishCard";
 
 export default function ProfilePage() {
@@ -27,31 +27,34 @@ export default function ProfilePage() {
   const [currentDish, setCurrentDish] = useState("");
 
   const getProfileDishes = useCallback(async (query) => {
-    //  try {
-    //    const response = await fetch(
-    //      `${process.env.REACT_APP_BACKEND_URL}/textsearch/json?query=${query}&key=${process.env.REACT_APP_API_KEY}`,
-    //      {
-    //        method: "GET",
-    //        headers: {
-    //        },
-    //      }
-    //    );
+    const userId = localStorage.getItem(
+      "CognitoIdentityServiceProvider.7h8akm6h0rbr8feo4te4539jf3.LastAuthUser"
+    );
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/users/reviews?userId=${userId}`,
+        {
+          method: "GET",
+          headers: {},
+        }
+      );
 
-    //    const data = await response.json();
-    //    console.log(data);
+      const data = await response.json();
+      console.log(data);
 
-    //    if (!response.ok) {
-    //      throw new Error(data.message || "Could not get restaurants");
-    //    }
-    //    console.log(data);
-    //    setTimeout(() => {
-    //      setIsLoading(false);
-    //    }, 200);
-    //  } catch {
-    //    alert("Something went wrong while getting restaurants");
-    //    setError(true);
-    //  }
-    console.log("REQUEST TO GET PROFILE DISHES");
+      if (!response.ok) {
+        throw new Error(data.message || "Could not get reviews");
+      }
+      console.log(data);
+      setProfileDishes(data.body);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
+    } catch {
+      alert("Something went wrong while getting reviews");
+      setError(true);
+    }
+    console.log("REQUEST TO GET PROFILE reviews");
   }, []);
 
   const showModalHandler = (dish) => {
@@ -72,16 +75,16 @@ export default function ProfilePage() {
     <div>
       {!error && showModal && (
         <Modal
-          title="Add to your dishes"
+          title="Your Review"
           onConfirm={dismissModalHandler}
           onCancel={dismissModalHandler}
         >
-          <AddDishForm
+          <ReviewForm
             disabledInputs={true}
             onSave={null}
             dish={currentDish}
             onCancel={dismissModalHandler}
-          ></AddDishForm>
+          ></ReviewForm>
         </Modal>
       )}
       <ProfileCard></ProfileCard>

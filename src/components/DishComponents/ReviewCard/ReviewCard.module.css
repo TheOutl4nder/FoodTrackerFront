@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  background-color: rgb(248, 245, 245);
+  /* border:1px solid grey; */
+  border-color: grey;
+  border-radius: 6px;
+}
+
+.user {
+  display: flex;
+  width: 20%;
+  flex-direction: column;
+  align-items: center;
+  border-right:4px solid;
+}
+
+.user div {
+  padding: 2px;
+
+}
+.review {
+  padding:10px;
+  display: flex;
+  width: 80%;
+}
