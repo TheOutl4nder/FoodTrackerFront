@@ -57,7 +57,7 @@
 }
 
 .card_left_up {
-  background-color: #a6cef3;
+  background-color: #f0a535;
   height: 30%;
   display: flex;
   flex-direction: row;
@@ -75,7 +75,7 @@
 }
 
 .card_left_down {
-  background-color: #85b9e9;
+  background-color: #e9ba85;
   height: 70%;
 }
 

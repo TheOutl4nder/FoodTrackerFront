@@ -15,6 +15,7 @@ export default function ReviewForm(props) {
     return value.trim() === "";
   };
 
+
   const reviewHook = useInput(IsEmpty);
   const instructionsHook = useInput(IsEmpty);
   const gradeHook = useInput(IsEmpty);
@@ -47,7 +48,7 @@ export default function ReviewForm(props) {
   const handleSave = async () => {
     let bucketName = props.dish.dishId;
     let storageRef = firebase.storage().ref(`${bucketName}/${files.name}`);
-    let uploadTask = await storageRef.put(files);
+    await storageRef.put(files);
     let downloadURL = await storageRef.getDownloadURL();
    
     setImage(downloadURL);
@@ -64,7 +65,8 @@ export default function ReviewForm(props) {
           </>
         )}
        < div className={classes.imageContainer}>
-          <img alt="broken" id="new-img" src={imageURL}></img>
+          {!props.viewIcon&&<img alt="broken" id="new-img" src={imageURL}></img>}
+         {props.viewIcon && <img alt="broken" id="new-img" src={props.dish.image}></img>}
        </ div>
         {!props.viewIcon && (
           <>

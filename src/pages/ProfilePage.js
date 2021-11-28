@@ -4,7 +4,6 @@ import Modal from "../components/Modal/Modal";
 import ProfileCard from "../components/ProfileComponents/ProfileCard";
 import ReviewForm from "../components/RestaurantComponents/ReviewForm/ReviewForm";
 import DishCard from "../components/RestaurantComponents/DishCard/DishCard";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 export default function ProfilePage() {
   const fakeProducts = [
@@ -60,6 +59,7 @@ export default function ProfilePage() {
   const showModalHandler = (dish) => {
     setShowModal(true);
     setCurrentDish(dish);
+    console.log(dish);
   };
 
   const dismissModalHandler = () => {

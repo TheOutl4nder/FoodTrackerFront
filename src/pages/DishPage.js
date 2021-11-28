@@ -8,7 +8,6 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 export default function DishPage() {
  
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [currentDish, setDish] = useState('fakeDish');
   const [reviews, setReviews] = useState([]);
   const [photos, setPhotos] = useState([]);
@@ -35,7 +34,7 @@ export default function DishPage() {
         }, 200);
       } catch {
         alert("Something went wrong while getting dish");
-        setError(true);
+        
       }
     },
     [params.dishId]
@@ -62,7 +61,7 @@ export default function DishPage() {
         }, 200);
       } catch {
         alert("Something went wrong while getting dish");
-        setError(true);
+        
       }
     },
     [params.dishId]

@@ -3,6 +3,7 @@ import classes from "./ProfileCard.module.css";
 import { FaUserAlt } from "react-icons/fa";
 
 export default function ProfileCard({props}) {
+  const username=localStorage.getItem('username');
 
     const iconStyle = { color: "#FFA500", fontSize: 90 };
 
@@ -13,7 +14,7 @@ export default function ProfileCard({props}) {
           <FaUserAlt style={iconStyle}></FaUserAlt>
           </div>
         <div className={classes.name}>
-          <h1>Kevin</h1>
+          <h1>{username}</h1>
         </div>
        
       </div>
