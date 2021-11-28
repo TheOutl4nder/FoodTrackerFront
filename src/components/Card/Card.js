@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import classes from "./Card.module.css";
 import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 export default function Card({ element }) {
   const dummyPhotos = [
@@ -46,6 +47,7 @@ export default function Card({ element }) {
   const [isLoading, setIsLoading] = useState([]);
   const [photos, setPhotos] = useState([]);
   const getPlacePhotos = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/restaurants/photos?restaurantId=${element.place_id}`,
@@ -67,6 +69,7 @@ export default function Card({ element }) {
         }
         setPhotos(fourPhotos);
       }
+      setIsLoading(false);
       
     } catch {
       alert("Something went wrong while getting the photos");
@@ -102,7 +105,7 @@ export default function Card({ element }) {
                   ></img>
                 ))}
                 {
-                  photos.length===0 && <div>
+                  (photos.length===0 && !isLoading) && <div>
                     <p className={classes.noPhotosLabel}>This place does not have photos</p>
                   </div>
                 }

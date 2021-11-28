@@ -1029,7 +1029,7 @@ export default function HomePage() {
       }
     } catch {
       setError(true);
-      alert("Something went wrong while getting restaurants");
+     
     }
     setTimeout(() => {
       setIsLoading(false);

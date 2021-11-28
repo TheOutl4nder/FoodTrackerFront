@@ -113,9 +113,32 @@
   
   .leftContainer {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
   .rightContainer {
     width: 70%;
   }
   
+  .leftContainer img{
+    width: auto;
+    max-width: 250px;
+    height: auto;
+    max-height: 250px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+
+.leftContainer button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: orange;
+  border: 0px solid white;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}

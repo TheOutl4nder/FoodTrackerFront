@@ -78,12 +78,14 @@ export default function RestaurantPage() {
   const [error, setError] = useState(false);
   const [restaurant, setRestaurant] = useState(fakeRestaurant);
   const [products, setProducts] = useState(fakeProducts);
+  const [ID, setID] = useState("");
   const [showNewDishModal, setNewDishModal] = useState(false);
   const [showReviewModal, setReviewModal] = useState(false);
   const [currentDish, setCurrentDish] = useState("");
   const params = useParams();
   console.log(params);
   const showNewDishModalHandler = () => {
+    setID(Date.now().toString());
     setNewDishModal(true);
   };
 
@@ -100,38 +102,40 @@ export default function RestaurantPage() {
     setReviewModal(false);
   };
 
-  const getRestaurant = useCallback(async (query) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/restaurants/details?restaurantId=${params.restaurantId}`,
-        {
-          method: "GET",
-          headers: {},
-        }
-      );
-      const data = await response.json();
-      console.log(data);
+  const getRestaurant = useCallback(
+    async (query) => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/restaurants/details?restaurantId=${params.restaurantId}`,
+          {
+            method: "GET",
+            headers: {},
+          }
+        );
+        const data = await response.json();
+        console.log(data);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Could not get single restaurant");
+        if (!response.ok) {
+          throw new Error(data.message || "Could not get single restaurant");
+        }
+        console.log(data);
+        console.log(data.body.resaurantInfo);
+        setRestaurant(data.body.resaurantInfo.result);
+        setProducts(data.body.dishes);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
+      } catch {
+        alert("Something went wrong while getting restaurants");
+        setError(true);
       }
-      console.log(data);
-      console.log(data.body.resaurantInfo);
-      setRestaurant(data.body.resaurantInfo.result);
-      setProducts(data.body.dishes);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
-    } catch {
-      alert("Something went wrong while getting restaurants");
-      setError(true);
-    }
-    console.log("REQUEST TO GET SINGLE RESTAURANT");
-  }, [params.restaurantId]);
+      console.log("REQUEST TO GET SINGLE RESTAURANT");
+    },
+    [params.restaurantId]
+  );
 
   const postNewDish = useCallback(async (dish) => {
-    
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/restaurants/dishes`,
@@ -150,6 +154,7 @@ export default function RestaurantPage() {
       if (!response.ok) {
         throw new Error(data.message || "Could not post dish");
       }
+      window.location.reload(false);
     } catch {
       alert("Something went wrong");
     }
@@ -231,6 +236,7 @@ export default function RestaurantPage() {
           onCancel={dismissNewDishModalHandler}
         >
           <NewDishForm
+            id={ID}
             restaurant={restaurant}
             onSave={postNewDish}
             onCancel={dismissNewDishModalHandler}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./DishData.module.css";
 import { FaStar } from "react-icons/fa";
 
-export default function DishData({ dish }) {
+export default function DishData({ dish,photos }) {
   const dummyPhotos = [
     {
       height: 3024,
@@ -77,8 +77,8 @@ export default function DishData({ dish }) {
       width: 4032,
     }
   ];
-
-  const [photos, setPhotos] = useState(dummyPhotos);
+console.log(photos);
+  // const [photos, setPhotos] = useState(dummyPhotos);
   return (
     <div className={classes.container}>
       <div className={classes.info}>
@@ -91,15 +91,15 @@ export default function DishData({ dish }) {
         </div>
       </div>
       <div className={classes.containerCarousel}>
-        {/* {photos.length > 0 &&
+        {photos.length > 0 &&
           photos.map((image) => (
             <img
-              key={image.photo_reference}
+              key={image}
               alt={"broken"}
-              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${image.photo_reference}&key=${process.env.REACT_APP_API_KEY}
-                  `}
+              src={image
+                  }
             ></img>
-          ))} */}
+          ))}
       </div>
       <div className={classes.extra}>h</div>
     </div>

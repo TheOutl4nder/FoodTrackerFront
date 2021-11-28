@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 
+
 export default function DishCard(props) {
   // const dish = {
   //   name: "Chicken Crispers",
@@ -16,6 +17,7 @@ export default function DishCard(props) {
   const clickHandler = () => {
     props.onClick(props.dish);
   };
+  console.log(props);
 
   return (
     <div className={classes.card_wrap}>
@@ -31,7 +33,7 @@ export default function DishCard(props) {
 
         <div className={classes.card_down}>
           <div>
-            <p>{props.dish.name}</p>
+            <p>{!props.viewIcon && props.dish.name}{props.viewIcon && props.dish.dishName}</p>
             {props.viewIcon && <p>{props.dish.restaurantName}</p>}
           </div>
           <div className={classes.addBtn}>

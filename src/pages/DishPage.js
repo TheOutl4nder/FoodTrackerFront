@@ -1,107 +1,117 @@
-import React, { useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import DishData from "../components/DishComponents/DishData";
 import ReviewContainer from "../components/DishComponents/ReviewContainer/ReviewContainer";
 import { useParams } from "react-router-dom";
+import firebase from "../firebase";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 export default function DishPage() {
-
-  const fakeDish = {
-    dishId: "1",
-    name: "Chicken Crispers",
-    restaurantId: "pepe",
-    description: "Chicken bla bla bla bla bla bla bl ba lb la bl ba",
-    category: "Main Dish",
-    photos: [],
-  };
-
-  const FakeReviews = [
-    {
-      instructions: "Don't ask for it",
-      photo:
-        "https://www.kindpng.com/picc/m/545-5456048_krabby-patty-png-download-krabby-patty-transparent-png.png",
-      rating: 1,
-      reviewId: "Review1637980315963",
-      userId: "randomUser123",
-      text: "Awful",
-      username: "Jane Doe",
-      dishId: "randomDish789",
-    },
-  ];
-
+ 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [currentDish, setDish] = useState(fakeDish);
-  const [reviews,setReviews]= useState([]);
+  const [currentDish, setDish] = useState('fakeDish');
+  const [reviews, setReviews] = useState([]);
+  const [photos, setPhotos] = useState([]);
   const params = useParams();
 
-  const getDish = useCallback(async (query) => {
-     try {
-       const response = await fetch(
-         `${process.env.REACT_APP_BACKEND_URL}/restaurants/dishes?dishId=${params.dishId}`,
-         {
-           method: "GET",
-           headers: {
-           },
-         }
-       );
-       const data = await response.json();
-       console.log(data);
+  const getDish = useCallback(
+    async (query) => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/restaurants/dishes?dishId=${params.dishId}`,
+          {
+            method: "GET",
+            headers: {},
+          }
+        );
+        const data = await response.json();
+        console.log(data);
 
-       if (!response.ok) {
-         throw new Error(data.message || "Could not get dish");
-       }
-       setDish(data.body);
-       setTimeout(() => {
-         setIsLoading(false);
-       }, 200);
-     } catch {
-       alert("Something went wrong while getting dish");
-       setError(true);
-     }
-    console.log("REQUEST TO GET DISH");
-  }, [params.dishId]);
-
-  const getReviews = useCallback(async (query) => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews?dishId=${params.dishId}`,
-        {
-          method: "GET",
-          headers: {
-          },
+        if (!response.ok) {
+          throw new Error(data.message || "Could not get dish");
         }
-      );
-      const data = await response.json();
-      console.log(data);
-
-      if (!response.ok) {
-        throw new Error(data.message || "Could not get dish");
+        setDish(data.body);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
+      } catch {
+        alert("Something went wrong while getting dish");
+        setError(true);
       }
-      setReviews(data.body);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
-    } catch {
-      alert("Something went wrong while getting dish");
-      setError(true);
-    }
-    console.log("REQUEST TO GET REVIEWS");
-  }, [params.dishId]);
+      console.log("REQUEST TO GET DISH");
+    },
+    [params.dishId]
+  );
 
-  
+  const getReviews = useCallback(
+    async (query) => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/reviews?dishId=${params.dishId}`,
+          {
+            method: "GET",
+            headers: {},
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+
+        if (!response.ok) {
+          throw new Error(data.message || "Could not get dish");
+        }
+        setReviews(data.body);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
+      } catch {
+        alert("Something went wrong while getting dish");
+        setError(true);
+      }
+      console.log("REQUEST TO GET REVIEWS");
+    },
+    [params.dishId]
+  );
+
+  async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  }
+
+  const getPhotos = useCallback(
+    async (query) => {
+      let urls=[];
+      let listRef = firebase.storage().ref(`${params.dishId}/`);
+      let list= await listRef.listAll();
+      console.log(list.items);
+      await asyncForEach(list.items, async (item) => {
+        let url= await item.getDownloadURL();
+        console.log(url);
+        urls.push(url);
+      })
+      setPhotos(urls);
+      
+      console.log("REQUEST TO GET DISH PHOTOS");
+    },
+    [params.dishId]
+  );
 
   useEffect(() => {
     setIsLoading(true);
     getDish("restaurants");
     getReviews();
+    getPhotos();
     setTimeout(() => {
       setIsLoading(false);
     }, 200);
-  }, [getDish, getReviews]);
+  }, [getDish, getPhotos, getReviews]);
   return (
     <div>
-      <DishData dish={currentDish}></DishData>
-      <ReviewContainer reviews={reviews}></ReviewContainer>
+      {isLoading && <LoadingSpinner></LoadingSpinner>}
+     {!isLoading && <div>
+        <DishData dish={currentDish} photos={photos}></DishData>
+        <ReviewContainer reviews={reviews}></ReviewContainer>
+      </div>}
     </div>
   );
 }
